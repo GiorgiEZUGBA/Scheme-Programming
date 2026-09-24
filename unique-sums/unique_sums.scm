@@ -1,0 +1,32 @@
+; bolo testze ar gadis
+(define (contains lst elem)
+    (cond ((null? lst) #f)
+        ((= (car lst) elem) #t)
+        (else (contains (cdr lst) elem))
+    )
+)
+
+(define (merge sum_lst lst)
+    (cond ((null? lst) sum_lst)
+        ((not (contains sum_lst (car lst)))
+            (cons (car lst) (merge sum_lst (cdr lst)))
+        )
+        (else (merge sum_lst (cdr lst)))
+    )
+)
+
+(define (unique_sum_list seq)
+    (if (null? seq) '(0)
+        (let ((sum_lst (unique_sum_list (cdr seq))))
+            (merge sum_lst 
+                (map (lambda (elem)
+                    (+ (car seq) elem)
+                ) sum_lst )
+            )
+        )
+    )
+)
+
+(define (unique-sums seq)
+    (length (unique_sum_list seq))
+)

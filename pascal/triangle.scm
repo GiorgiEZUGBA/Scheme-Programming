@@ -1,0 +1,11 @@
+(define (get_next_row lst leftPr)
+    (if (= (length lst) 0) (list leftPr)
+        (append (list (+ leftPr (car lst))) (get_next_row (cdr lst) (car lst)))
+    )
+)
+
+(define (row index)
+  (if (= index 1) '(1)
+    (get_next_row (row (- index 1)) 0)
+  )
+)
